@@ -1,0 +1,731 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Envision — Hành Trình Phát Triển Cá Nhân</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@1,900&family=Nunito:wght@400;500;600;700;800&family=Outfit:wght@600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      /* Pastel palette from image */
+      --primary:    #e8877a !important; /* rose/salmon — main accent */
+      --primary-lt: #fdf0ee !important;
+      --primary-dk: #d4635a !important;
+      --green:      #7ecfc0 !important; /* teal mint */
+      --green-lt:   #e8f7f5 !important;
+      --blue:       #a8d5a2 !important; /* lime green */
+      --blue-lt:    #eef7ed !important;
+      --yellow:     #f7c5a8 !important; /* peach */
+      --yellow-lt:  #fef4ee !important;
+      --red:        #ef6b7b !important; /* rose red */
+      --red-lt:     #fdedef !important;
+      --pink:       #f4a8b0 !important; /* salmon pink */
+      --pink-lt:    #fef0f2 !important;
+      --teal:       #7ecfc0 !important;
+      --orange:     #f7c5a8 !important;
+      --orange-lt:  #fef4ee !important;
+
+      /* Backgrounds — warm cream white */
+      --bg:         #fffaf9 !important;
+      --bg2:        #ffffff !important;
+      --bg3:        #fdf5f3 !important;
+      --sidebar-bg: #ffffff !important;
+
+      /* Borders — soft peach tones */
+      --border:     #f5e6e2 !important;
+      --border2:    #edcfc8 !important;
+
+      /* Text — warm dark */
+      --text:       #2d1f1c !important;
+      --text-muted: #9e7a74 !important;
+      --text-light: #c9a9a3 !important;
+
+      --font-body: 'Nunito', sans-serif !important;
+      --font-heading: 'Outfit', sans-serif !important;
+    }
+
+    /* Logo gradient: teal → rose */
+    .sidebar-logo .logo-text {
+      background: linear-gradient(120deg, #7ecfc0, #ef6b7b) !important;
+      -webkit-background-clip: text !important;
+      -webkit-text-fill-color: transparent !important;
+      background-clip: text !important;
+    }
+
+    /* Nav active: peach tint */
+    .nav-item.active { background: #fdf0ee !important; color: #e8877a !important; }
+    .nav-item.active::before { background: #e8877a !important; }
+    .nav-item:hover { background: #fdf5f3 !important; }
+
+    /* Topbar */
+    .topbar { background: rgba(255,250,249,0.97) !important; border-bottom-color: #f5e6e2 !important; }
+    .task-strip { background: rgba(255,250,249,0.97) !important; border-bottom-color: #f5e6e2 !important; }
+
+    /* Buttons */
+    .btn-primary { background: linear-gradient(135deg, #e8877a, #ef6b7b) !important; box-shadow: 0 2px 10px rgba(232,135,122,0.25) !important; }
+    .btn-primary:hover { background: linear-gradient(135deg, #d4635a, #e8877a) !important; }
+    .btn-blue { background: #7ecfc0 !important; }
+    .btn-blue:hover { background: #5bbfaf !important; }
+
+    /* Progress bars */
+    .progress-purple { background: linear-gradient(90deg, #f4a8b0, #ef6b7b) !important; }
+    .progress-green  { background: linear-gradient(90deg, #a8d5a2, #7ecfc0) !important; }
+    .progress-blue   { background: linear-gradient(90deg, #b8e0d4, #7ecfc0) !important; }
+    .progress-yellow { background: linear-gradient(90deg, #f7c5a8, #f0a882) !important; }
+    .progress-red    { background: linear-gradient(90deg, #f4a8b0, #ef6b7b) !important; }
+    .progress-pink   { background: linear-gradient(90deg, #f9c8d0, #f4a8b0) !important; }
+    .progress-orange { background: linear-gradient(90deg, #f7c5a8, #f0a882) !important; }
+    .progress-teal   { background: linear-gradient(90deg, #a8ddd6, #7ecfc0) !important; }
+
+    /* Donut */
+    #donut-fill { stroke: url(#prog-gradient) !important; }
+    #donut-pct-text { fill: #e8877a !important; }
+
+    /* Badges */
+    .badge-purple { background: #fdf0ee !important; color: #e8877a !important; }
+    .badge-green  { background: #e8f7f5 !important; color: #4aafa0 !important; }
+    .badge-blue   { background: #eef7ed !important; color: #5aaa54 !important; }
+    .badge-yellow { background: #fef4ee !important; color: #c47a45 !important; }
+    .badge-red    { background: #fdedef !important; color: #d94055 !important; }
+    .badge-pink   { background: #fef0f2 !important; color: #c85c6e !important; }
+    .badge-teal   { background: #e8f7f5 !important; color: #4aafa0 !important; }
+    .badge-gray   { background: #f5f0ef !important; color: #9e7a74 !important; }
+
+    /* Input focus */
+    .input-field:focus { border-color: #e8877a !important; box-shadow: 0 0 0 3px rgba(232,135,122,0.15) !important; }
+
+    /* Filter btn active */
+    .filter-btn:hover, .filter-btn.active { background: #e8877a !important; border-color: #e8877a !important; color: #fff !important; }
+
+    /* Notification */
+    .notification { border-color: #e8877a !important; }
+
+    /* Card hover */
+    .card:hover { border-color: rgba(232,135,122,0.3) !important; box-shadow: 0 4px 16px rgba(232,135,122,0.08) !important; }
+
+    /* Goal card hover */
+    .goal-card:hover { border-color: #e8877a !important; }
+
+    /* Stat chip sub */
+    .stat-chip .stat-sub { color: #7ecfc0 !important; }
+
+    /* Widget quote border */
+    .widget-quote { border-color: rgba(232,135,122,0.2) !important; background: linear-gradient(135deg, #fffaf9, #fdf5f3) !important; }
+    .widget-challenge { border-color: rgba(247,197,168,0.4) !important; background: linear-gradient(135deg, #fff8f4, #fdf5f3) !important; }
+
+    /* Timeline dot */
+    .timeline-dot { background: linear-gradient(135deg, #7ecfc0, #e8877a) !important; box-shadow: 0 0 8px rgba(232,135,122,0.3) !important; }
+
+    /* Strip pill */
+    .strip-pill:hover { border-color: #e8877a !important; background: #fdf0ee !important; color: #e8877a !important; }
+    .task-strip-more { background: #fdf0ee !important; border-color: #edcfc8 !important; color: #e8877a !important; }
+    .task-strip-more:hover { background: #e8877a !important; color: #fff !important; }
+
+    /* View toggle active */
+    .view-toggle .toggle-btn.active { background: #e8877a !important; color: #fff !important; }
+
+    /* Avatar */
+    .avatar { background: linear-gradient(135deg, #7ecfc0, #e8877a) !important; }
+
+    /* Donut gradient override */
+    #prog-gradient stop:first-child { stop-color: #f7c5a8 !important; }
+    #prog-gradient stop:last-child  { stop-color: #ef6b7b !important; }
+  </style>
+</head>
+<body>
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="sidebar-logo" onclick="navigate('home')" title="Về Home">
+      <span class="logo-text">Envision</span>
+    </div>
+    <nav class="sidebar-nav">
+      <div class="nav-label">Menu</div>
+      <a class="nav-item active" data-page="home" onclick="navigate('home')">
+        <span class="nav-icon">🏠</span><span>Home</span>
+      </a>
+      <a class="nav-item" data-page="goals" onclick="navigate('goals')">
+        <span class="nav-icon">🎯</span><span>Goal Tracker</span>
+      </a>
+      <a class="nav-item" data-page="tasks" onclick="navigate('tasks')">
+        <span class="nav-icon">📋</span><span>Task Planner</span>
+      </a>
+      <a class="nav-item" data-page="progress" onclick="navigate('progress')">
+        <span class="nav-icon">📊</span><span>Progress Tracker</span>
+      </a>
+      <a class="nav-item" data-page="calendar" onclick="navigate('calendar')">
+        <span class="nav-icon">📅</span><span>Calendar</span>
+      </a>
+    </nav>
+    <div class="sidebar-footer">
+      <div class="user-info">
+        <div class="avatar">E</div>
+        <div>
+          <div style="font-size:.78rem;font-weight:700;color:var(--text)">Envision</div>
+          <div style="font-size:.68rem;color:var(--text-muted)">11.2TN</div>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="main">
+
+    <!-- Topbar -->
+    <div class="topbar">
+      <div class="topbar-title" id="topbar-title">Home</div>
+      <div class="topbar-right">
+        <div class="topbar-date" id="topbar-date-display">—</div>
+        <div class="avatar" style="width:28px;height:28px;font-size:.72rem;cursor:pointer">B</div>
+      </div>
+    </div>
+
+    <!-- Task Strip -->
+    <div class="task-strip">
+      <div class="task-strip-label">📋 Hôm nay:</div>
+      <div class="task-strip-items" id="task-strip-items"></div>
+      <button class="task-strip-more" onclick="navigate('tasks')">Xem tất cả →</button>
+    </div>
+
+    <!-- ══════ PAGE: HOME ══════ -->
+    <div class="page active" id="page-home">
+      <div class="page-content">
+
+        <!-- Greeting -->
+        <div class="mb-16">
+          <h1 style="font-size:1.4rem;margin-bottom:2px" id="home-greeting">Chào buổi sáng! 👋</h1>
+          <p class="text-sm text-muted">Today is <span id="home-date-text">—</span>. Make it count.</p>
+        </div>
+
+        <!-- KPI row -->
+        <div class="grid-4 mb-16">
+          <div class="stat-chip">
+            <div class="stat-value text-purple" id="home-active-goals">—</div>
+            <div class="stat-label">Mục tiêu đang làm</div>
+            <div class="stat-sub">↑ Tiếp tục phát huy</div>
+          </div>
+          <div class="stat-chip">
+            <div class="stat-value" style="color:var(--green)" id="home-done-goals">—</div>
+            <div class="stat-label">Mục tiêu hoàn thành</div>
+            <div class="stat-sub">🏆 Xuất sắc!</div>
+          </div>
+          <div class="stat-chip">
+            <div class="stat-value" id="home-total-tasks">—</div>
+            <div class="stat-label">Tổng nhiệm vụ</div>
+            <div class="stat-sub" style="color:var(--text-muted)"><span id="home-done-tasks">—</span> đã xong</div>
+          </div>
+          <div class="stat-chip">
+            <div class="stat-value text-purple" id="home-avg-progress">—</div>
+            <div class="stat-label">Tiến độ trung bình</div>
+            <div class="stat-sub" style="color:var(--text-muted)">Các mục tiêu</div>
+          </div>
+        </div>
+
+        <!-- Progress + Today tasks -->
+        <div class="grid-2 mb-16">
+          <div class="card">
+            <div class="card-title"><div class="dot"></div>Tiến độ tổng quan</div>
+            <div class="flex-between mb-12" style="margin-bottom:7px">
+              <span class="text-sm text-muted">Trung bình tất cả mục tiêu</span>
+              <span class="text-sm text-purple" style="font-weight:700" id="home-avg-p2">—%</span>
+            </div>
+            <div class="progress-bar-wrap" style="height:10px;margin-bottom:14px">
+              <div class="progress-bar-fill progress-purple" id="home-overall-bar" style="width:0%"></div>
+            </div>
+            <div class="flex gap-8">
+              <button class="btn btn-primary btn-sm" onclick="navigate('goals')">🎯 Mục tiêu</button>
+              <button class="btn btn-secondary btn-sm" onclick="navigate('progress')">📊 Tiến độ</button>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-title"><div class="dot" style="background:var(--blue)"></div>Hoạt động hôm nay</div>
+            <div style="display:flex;flex-direction:column;gap:7px;max-height:160px;overflow-y:auto" id="home-today-tasks"></div>
+          </div>
+        </div>
+
+        <!-- Quick actions -->
+        <div class="mb-16 flex gap-8" style="flex-wrap:wrap">
+          <button class="btn btn-primary btn-sm" onclick="navigate('goals');setTimeout(()=>openGoalModal(),80)">＋ Tạo mục tiêu</button>
+          <button class="btn btn-secondary btn-sm" onclick="navigate('tasks');setTimeout(()=>openTaskModal(),80)">＋ Thêm nhiệm vụ</button>
+          <button class="btn btn-ghost btn-sm" onclick="navigate('calendar')">📅 Mở lịch</button>
+        </div>
+
+        <!-- Widgets row -->
+        <div class="grid-2 mb-16">
+          <!-- Challenge -->
+          <div class="widget-challenge">
+            <div class="card-title" style="color:#b45309"><div class="dot" style="background:var(--yellow)"></div>⚡ Thử thách hôm nay</div>
+            <div style="font-size:2rem;margin-bottom:6px" id="home-challenge-icon">📚</div>
+            <p style="font-size:.82rem;line-height:1.55;font-weight:600" id="home-challenge-text">—</p>
+            <button class="btn btn-sm" onclick="acceptChallenge()" style="margin-top:10px;background:var(--yellow-lt);color:#b45309;border:1px solid #fde68a">Nhận thử thách 💪</button>
+          </div>
+
+          <!-- Monthly recap -->
+          <div class="card">
+            <div class="card-title"><div class="dot" style="background:var(--blue)"></div>📊 Monthly Recap — T10/2026</div>
+            <div style="display:flex;flex-direction:column;gap:10px">
+              <div>
+                <div class="flex-between" style="margin-bottom:4px">
+                  <span class="text-sm">Tỉ lệ hoàn thành nhiệm vụ</span>
+                  <span class="text-sm text-purple" style="font-weight:700" id="home-recap-pct">—</span>
+                </div>
+                <div class="progress-bar-wrap"><div class="progress-bar-fill progress-blue" id="home-recap-bar" style="width:0%"></div></div>
+              </div>
+              <div class="flex gap-8">
+                <div style="flex:1;background:var(--bg3);border-radius:8px;padding:8px;text-align:center">
+                  <div class="text-sm" style="color:var(--green);font-weight:700" id="home-recap-goals">—</div>
+                  <div class="text-xs text-muted">Mục tiêu</div>
+                </div>
+                <div style="flex:1;background:var(--bg3);border-radius:8px;padding:8px;text-align:center">
+                  <div class="text-sm text-purple" style="font-weight:700" id="home-recap-tasks">—</div>
+                  <div class="text-xs text-muted">Nhiệm vụ</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Achievement & Reflection -->
+        <div class="card mb-16">
+          <div class="card-title"><div class="dot" style="background:var(--yellow)"></div>🏅 Achievement & Reflection Corner</div>
+          <div class="grid-2" style="gap:12px;margin-bottom:12px">
+            <!-- Achievements -->
+            <div>
+              <div style="font-size:.72rem;font-weight:700;color:var(--text-muted);margin-bottom:8px;text-transform:uppercase;letter-spacing:.8px">🏆 Thành tựu</div>
+              <div style="display:flex;flex-direction:column;gap:6px;max-height:150px;overflow-y:auto" id="achievements-list"></div>
+              <button class="btn btn-secondary btn-sm" style="margin-top:8px;width:100%" onclick="openAchievementModal()">＋ Thêm thành tựu</button>
+            </div>
+            <!-- Reflections -->
+            <div>
+              <div style="font-size:.72rem;font-weight:700;color:var(--text-muted);margin-bottom:8px;text-transform:uppercase;letter-spacing:.8px">💭 Reflection</div>
+              <div style="display:flex;flex-direction:column;gap:6px;max-height:150px;overflow-y:auto" id="reflections-list"></div>
+              <button class="btn btn-ghost btn-sm" style="margin-top:8px;width:100%" onclick="openReflectionModal()">＋ Viết reflection</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quote -->
+        <div class="widget-quote">
+          <div class="card-title" style="color:var(--primary)"><div class="dot"></div>💬 Quote of the Day</div>
+          <p style="font-size:.9rem;line-height:1.65;font-style:italic;position:relative;z-index:1" id="home-quote">—</p>
+        </div>
+
+        <footer style="margin-top:28px;padding-top:14px;border-top:1px solid var(--border);text-align:center;color:var(--text-muted);font-size:.68rem">
+          Envision © 2026 — Nhóm 11.2TN | Bảo Nghi · Bảo Ngọc · Trần Khang · Anh Tuấn · Đức Tuấn
+        </footer>
+      </div>
+    </div>
+
+    <!-- ══════ PAGE: GOAL TRACKER ══════ -->
+    <div class="page" id="page-goals">
+      <div class="page-content">
+        <div class="section-header">
+          <div>
+            <h2 style="font-size:1.2rem">🎯 Goal Tracker</h2>
+            <p class="text-xs text-muted" id="goals-count" style="margin-top:2px">—</p>
+          </div>
+          <button class="btn btn-primary btn-sm" onclick="openGoalModal()">＋ Tạo mục tiêu</button>
+        </div>
+        <div class="filter-bar">
+          <button class="filter-btn active" onclick="setGoalFilter('all')" data-filter="all">Tất cả</button>
+          <button class="filter-btn" onclick="setGoalFilter('active')" data-filter="active">🔄 Đang làm</button>
+          <button class="filter-btn" onclick="setGoalFilter('done')" data-filter="done">✅ Hoàn thành</button>
+        </div>
+        <div class="grid-2" id="goals-list"></div>
+        <footer style="margin-top:24px;padding-top:12px;border-top:1px solid var(--border);text-align:center;color:var(--text-muted);font-size:.68rem">Envision © 2026 — Mỗi mục tiêu là một bước tiến 🎯</footer>
+      </div>
+    </div>
+
+    <!-- ══════ PAGE: TASK PLANNER ══════ -->
+    <div class="page" id="page-tasks">
+      <div class="page-content">
+        <div class="section-header">
+          <div>
+            <h2 style="font-size:1.2rem">📋 Task Planner</h2>
+            <p class="text-xs text-muted" id="tasks-count" style="margin-top:2px">—</p>
+          </div>
+          <div class="flex gap-8">
+            <button class="btn btn-secondary btn-sm" onclick="openCategoryModal()">⚙️ Danh mục</button>
+            <button class="btn btn-primary btn-sm" onclick="openTaskModal()">＋ Thêm nhiệm vụ</button>
+          </div>
+        </div>
+
+        <!-- Summary chips -->
+        <div class="grid-3 mb-16" id="task-summary-chips" style="margin-bottom:12px"></div>
+
+        <!-- Quick add -->
+        <div class="card mb-16" style="margin-bottom:12px">
+          <div class="card-title"><div class="dot" style="background:var(--blue)"></div>Thêm nhanh</div>
+          <div class="flex gap-8">
+            <input class="input-field" id="quick-task-name" placeholder="Tên nhiệm vụ mới..." style="flex:1">
+            <select class="input-field" id="quick-task-cat" style="width:130px"></select>
+            <button class="btn btn-primary btn-sm" onclick="quickAddTask()">＋</button>
+          </div>
+        </div>
+
+        <!-- Filters -->
+        <div class="filter-bar" id="tasks-filter"></div>
+
+        <!-- Tasks grouped -->
+        <div id="tasks-list" style="display:flex;flex-direction:column;gap:6px"></div>
+
+        <footer style="margin-top:24px;padding-top:12px;border-top:1px solid var(--border);text-align:center;color:var(--text-muted);font-size:.68rem">Envision © 2026 — Từng bước nhỏ tạo nên thành công lớn 📋</footer>
+      </div>
+    </div>
+
+    <!-- ══════ PAGE: PROGRESS TRACKER ══════ -->
+    <div class="page" id="page-progress">
+      <div class="page-content">
+        <div class="section-header">
+          <div>
+            <h2 style="font-size:1.2rem">📊 Progress Tracker</h2>
+            <p class="text-xs text-muted" style="margin-top:2px">Theo dõi tiến độ phát triển theo thời gian</p>
+          </div>
+        </div>
+
+        <!-- Overall big card -->
+        <div class="card mb-16">
+          <div class="flex-between">
+            <div>
+              <div class="card-title"><div class="dot"></div>Tổng tiến độ</div>
+              <div style="font-size:2.5rem;font-weight:800;font-family:var(--font-heading);color:var(--primary)" id="prog-overall-pct">—</div>
+              <span class="badge badge-purple" style="margin-top:6px;display:inline-flex">📈 Đang tăng trưởng</span>
+            </div>
+            <!-- Donut chart -->
+            <div class="progress-circle-wrap">
+              <svg width="110" height="110" viewBox="0 0 110 110">
+                <circle class="donut-track" cx="55" cy="55" r="45"/>
+                <circle class="donut-fill" id="donut-fill" cx="55" cy="55" r="45"
+                  stroke="url(#prog-gradient)"
+                  stroke-dasharray="283" stroke-dashoffset="283"
+                  transform="rotate(-90 55 55)"/>
+                <defs>
+                  <linearGradient id="prog-gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                    <stop offset="0%" stop-color="#f7c5a8"/>
+                    <stop offset="100%" stop-color="#ef6b7b"/>
+                  </linearGradient>
+                </defs>
+                <text x="55" y="59" id="donut-pct-text"
+                  style="font-size:1.1rem;font-weight:800;fill:#9b87f5;font-family:var(--font-heading);text-anchor:middle;dominant-baseline:middle">—</text>
+              </svg>
+            </div>
+          </div>
+          <div class="progress-bar-wrap" style="height:10px;margin-top:12px">
+            <div class="progress-bar-fill progress-purple" id="prog-overall-bar" style="width:0%"></div>
+          </div>
+        </div>
+
+        <div class="grid-2 mb-16">
+          <!-- Per-goal progress -->
+          <div class="card">
+            <div class="card-title"><div class="dot" style="background:var(--blue)"></div>Tiến độ từng mục tiêu</div>
+            <div id="prog-goals-list"></div>
+          </div>
+
+          <!-- Chart -->
+          <div class="card">
+            <div class="card-title"><div class="dot" style="background:var(--yellow)"></div>Biểu đồ tăng trưởng theo tháng</div>
+            <div id="prog-chart" style="display:flex;align-items:flex-end;gap:8px;height:130px;padding:0 4px"></div>
+            <div style="margin-top:6px;text-align:center;font-size:.65rem;color:var(--text-muted)">Tiến độ TB (%) theo tháng</div>
+          </div>
+        </div>
+
+        <div class="grid-2 mb-16">
+          <!-- Milestones -->
+          <div class="card">
+            <div class="card-title"><div class="dot"></div>🏅 Cột mốc phát triển</div>
+            <div class="timeline" id="prog-timeline"></div>
+          </div>
+
+          <!-- Quote of the day -->
+          <div class="widget-quote" style="display:flex;flex-direction:column;justify-content:center">
+            <div class="card-title" style="color:var(--primary)"><div class="dot"></div>💬 Quote of the Day</div>
+            <div id="prog-quote"></div>
+          </div>
+        </div>
+
+        <footer style="margin-top:24px;padding-top:12px;border-top:1px solid var(--border);text-align:center;color:var(--text-muted);font-size:.68rem">Envision © 2026 — Mỗi con số là minh chứng cho nỗ lực 📊</footer>
+      </div>
+    </div>
+
+    <!-- ══════ PAGE: CALENDAR ══════ -->
+    <div class="page" id="page-calendar">
+      <div class="page-content">
+        <div class="section-header">
+          <div>
+            <h2 style="font-size:1.2rem">📅 Calendar & To-Do</h2>
+            <p class="text-xs text-muted" style="margin-top:2px">Quản lý lịch trình, deadline và công việc hàng ngày</p>
+          </div>
+          <div class="flex gap-8">
+            <div class="view-toggle">
+              <button class="toggle-btn active" data-view="month" onclick="setCalView('month')">Tháng</button>
+              <button class="toggle-btn" data-view="week" onclick="setCalView('week')">Tuần</button>
+              <button class="toggle-btn" data-view="day" onclick="setCalView('day')">Ngày</button>
+            </div>
+            <button class="btn btn-primary btn-sm" onclick="openEventModal()">＋ Thêm sự kiện</button>
+          </div>
+        </div>
+
+        <!-- Calendar card -->
+        <div class="card mb-16">
+          <div class="flex-between" style="margin-bottom:12px">
+            <button class="btn btn-ghost btn-sm" onclick="calPrev()">← Trước</button>
+            <span style="font-weight:800;font-size:.95rem;font-family:var(--font-heading)" id="cal-month-label">—</span>
+            <button class="btn btn-ghost btn-sm" onclick="calNext()">Sau →</button>
+          </div>
+          <div id="cal-grid-wrap"></div>
+        </div>
+
+        <!-- Todo + Add -->
+        <div class="card">
+          <div class="card-title">
+            <div class="dot" style="background:var(--blue)"></div>
+            ✅ To-Do List hôm nay
+            <span class="badge badge-purple" style="margin-left:auto">
+              <span id="todo-done-count">0</span>/<span id="todo-total-count">0</span> xong
+            </span>
+          </div>
+          <div class="flex gap-8 mb-12" style="margin-bottom:10px">
+            <input class="input-field" id="new-todo-input" placeholder="Thêm công việc mới... (Enter để lưu)" style="flex:1">
+            <button class="btn btn-primary btn-sm" onclick="addTodo()">＋</button>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:6px" id="todo-list"></div>
+        </div>
+
+        <footer style="margin-top:24px;padding-top:12px;border-top:1px solid var(--border);text-align:center;color:var(--text-muted);font-size:.68rem">Envision © 2026 — Mỗi deadline là lời nhắc để hành động 📅</footer>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- ══════ MODAL: GOAL ══════ -->
+  <div class="modal-overlay" id="goal-modal">
+    <div class="modal">
+      <div class="modal-header">
+        <h3 id="goal-modal-heading">Tạo mục tiêu mới</h3>
+        <button class="modal-close" onclick="closeGoalModal()">×</button>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Tên mục tiêu *</label>
+        <input class="input-field" id="gm-title" placeholder="Ví dụ: Đọc 12 cuốn sách năm 2026">
+      </div>
+      <div class="grid-2">
+        <div class="form-group">
+          <label class="form-label">Danh mục</label>
+          <select class="input-field" id="gm-category">
+            <option value="Học tập">Học tập</option>
+            <option value="Sức khoẻ">Sức khoẻ</option>
+            <option value="Kỹ năng">Kỹ năng</option>
+            <option value="Tài chính">Tài chính</option>
+            <option value="Ngôn ngữ">Ngôn ngữ</option>
+            <option value="Khác">Khác</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Deadline</label>
+          <input class="input-field" type="date" id="gm-deadline">
+        </div>
+      </div>
+      <div class="grid-2">
+        <div class="form-group">
+          <label class="form-label">Tiến độ (%)</label>
+          <input class="input-field" type="number" id="gm-progress" min="0" max="100" placeholder="0">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Trạng thái</label>
+          <select class="input-field" id="gm-status">
+            <option value="active">Đang thực hiện</option>
+            <option value="done">Đã hoàn thành</option>
+          </select>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-ghost btn-sm" onclick="closeGoalModal()">Hủy</button>
+        <button class="btn btn-primary btn-sm" onclick="saveGoal()">💾 Lưu</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════ MODAL: TASK ══════ -->
+  <div class="modal-overlay" id="task-modal">
+    <div class="modal">
+      <div class="modal-header">
+        <h3 id="task-modal-heading">Thêm nhiệm vụ mới</h3>
+        <button class="modal-close" onclick="closeTaskModal()">×</button>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Tên nhiệm vụ *</label>
+        <input class="input-field" id="tm-name" placeholder="Ví dụ: Đọc chương 5 Atomic Habits">
+      </div>
+      <div class="grid-2">
+        <div class="form-group">
+          <label class="form-label">Danh mục</label>
+          <select class="input-field" id="tm-category"></select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Ưu tiên</label>
+          <select class="input-field" id="tm-priority">
+            <option value="high">🔴 Cao</option>
+            <option value="medium">🟡 Trung bình</option>
+            <option value="low">🟢 Thấp</option>
+          </select>
+        </div>
+      </div>
+      <div class="grid-2">
+        <div class="form-group">
+          <label class="form-label">Deadline</label>
+          <input class="input-field" type="date" id="tm-deadline">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Gán vào mục tiêu</label>
+          <select class="input-field" id="tm-goal"><option value="">— Không gán —</option></select>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Ghi chú</label>
+        <input class="input-field" id="tm-note" placeholder="Ghi chú thêm (không bắt buộc)">
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-ghost btn-sm" onclick="closeTaskModal()">Hủy</button>
+        <button class="btn btn-primary btn-sm" onclick="saveTask()">💾 Lưu</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════ MODAL: CATEGORY ══════ -->
+  <div class="modal-overlay" id="category-modal">
+    <div class="modal">
+      <div class="modal-header">
+        <h3>⚙️ Quản lý danh mục</h3>
+        <button class="modal-close" onclick="closeCategoryModal()">×</button>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Tạo danh mục mới</label>
+        <div class="flex gap-8">
+          <input class="input-field" id="new-cat-name" placeholder="Tên danh mục..." style="flex:1">
+          <input class="input-field" id="new-cat-icon" placeholder="Icon" style="width:64px;text-align:center">
+          <button class="btn btn-primary btn-sm" onclick="addCategory()">＋</button>
+        </div>
+      </div>
+      <div style="font-size:.72rem;font-weight:700;color:var(--text-muted);margin-bottom:8px;text-transform:uppercase">Danh mục hiện có</div>
+      <div id="categories-list" style="display:flex;flex-direction:column;gap:6px;max-height:200px;overflow-y:auto"></div>
+      <div class="modal-footer">
+        <button class="btn btn-primary btn-sm" onclick="closeCategoryModal()">Xong</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════ MODAL: EVENT (Calendar) ══════ -->
+  <div class="modal-overlay" id="event-modal">
+    <div class="modal">
+      <div class="modal-header">
+        <h3 id="event-modal-heading">＋ Thêm sự kiện / lịch trình</h3>
+        <button class="modal-close" onclick="closeEventModal()">×</button>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Tiêu đề *</label>
+        <input class="input-field" id="ev-title" placeholder="Ví dụ: Họp nhóm, sinh nhật, deadline...">
+      </div>
+      <div class="grid-2">
+        <div class="form-group">
+          <label class="form-label">Loại</label>
+          <select class="input-field" id="ev-type">
+            <option value="event">📌 Sự kiện</option>
+            <option value="task">📋 Công việc</option>
+            <option value="goal">🎯 Mục tiêu</option>
+            <option value="personal">👤 Cá nhân</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Ngày</label>
+          <input class="input-field" type="date" id="ev-date">
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Ghi chú</label>
+        <input class="input-field" id="ev-note" placeholder="Ghi chú (không bắt buộc)">
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-ghost btn-sm" onclick="closeEventModal()">Hủy</button>
+        <button class="btn btn-primary btn-sm" onclick="saveEvent()">💾 Lưu</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════ MODAL: ACHIEVEMENT ══════ -->
+  <div class="modal-overlay" id="achievement-modal">
+    <div class="modal">
+      <div class="modal-header">
+        <h3>🏆 Thêm thành tựu</h3>
+        <button class="modal-close" onclick="closeAchievementModal()">×</button>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Tiêu đề thành tựu *</label>
+        <input class="input-field" id="ach-title" placeholder="Ví dụ: Hoàn thành 10 cuốn sách">
+      </div>
+      <div class="grid-2">
+        <div class="form-group">
+          <label class="form-label">Icon</label>
+          <input class="input-field" id="ach-icon" placeholder="🏅" style="text-align:center">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Ngày đạt được</label>
+          <input class="input-field" type="date" id="ach-date">
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-ghost btn-sm" onclick="closeAchievementModal()">Hủy</button>
+        <button class="btn btn-primary btn-sm" onclick="saveAchievement()">💾 Lưu</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════ MODAL: REFLECTION ══════ -->
+  <div class="modal-overlay" id="reflection-modal">
+    <div class="modal">
+      <div class="modal-header">
+        <h3>💭 Viết Reflection</h3>
+        <button class="modal-close" onclick="closeReflectionModal()">×</button>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Chia sẻ suy nghĩ của bạn *</label>
+        <textarea class="input-field" id="ref-text" placeholder="Hôm nay tôi học được..." rows="3" style="resize:vertical"></textarea>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-ghost btn-sm" onclick="closeReflectionModal()">Hủy</button>
+        <button class="btn btn-primary btn-sm" onclick="saveReflection()">💾 Lưu</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- NOTIFICATION -->
+  <div class="notification" id="notif">
+    <span style="font-size:1.1rem">✅</span>
+    <span id="notif-msg">Đã lưu!</span>
+  </div>
+
+  <script src="js/app.js"></script>
+  <script>
+    function quickAddTask() {
+      const name = document.getElementById('quick-task-name').value.trim();
+      const cat  = document.getElementById('quick-task-cat').value;
+      if (!name) { document.getElementById('quick-task-name').focus(); return; }
+      state.tasks.push({ id: state.nextTaskId++, name, category: cat, priority: 'medium', status: 'todo', deadline: '2026-10-14', note: '', goalId: null });
+      document.getElementById('quick-task-name').value = '';
+      renderTasks(); renderTaskStrip();
+      showNotification('➕ Đã thêm nhiệm vụ!');
+    }
+    function acceptChallenge() { showNotification('💪 Bạn đã nhận thử thách! Cố lên!'); }
+    const _origRenderHome = renderHome;
+    renderHome = function() {
+      _origRenderHome();
+      const e = document.getElementById('home-avg-p2');
+      if (e) e.textContent = document.getElementById('home-avg-progress').textContent;
+    };
+  </script>
+</body>
+</html>
